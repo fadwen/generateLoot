@@ -216,37 +216,37 @@ function generateLoot(characterName, bodies) {
                 { 
                     name: "Adult Red Dragon Fire Gland", 
                     dice: "1", 
-                    description: "As an action, you can throw this gland up to 30 feet away where it will burst in a fiery explosion. Each creature within 10 feet of where the gland landed must succeed on a DC 21 Dexterity saving throw, taking 18d6 fire damage on a failed save, or half as much damage on a successful one. The gland is fragile and will burst 3d6 hours after being harvested, regardless of if it was thrown or not." 
+                    description: "As an action, you can throw this gland up to 30 feet ...." 
                 },
                 { 
                     name: "Red Dragon Claws", 
                     dice: "1d6",
-                    description: "Can be crafted into a dagger (150 gp, 9 days). On a hit, you deal an additional 1d6 fire damage with this weapon." 
+                    description: "Can be crafted into a dagger..." 
                 },
                 { 
                     name: "Red Dragon Fangs", 
                     dice: "1d2",
-                    description: "Can be crafted into a shortsword (150 gp, 9 days). On a hit, you deal an additional 1d6 fire damage with this weapon."
+                    description: "Can be crafted into a shortsword..."
                 },
                 { 
                     name: "Red Dragon Hide", 
                     dice: "1",
-                    description: "Can be crafted into a set of light armor (2000 gp, 60 days). While wearing this armor, you have resistance to fire damage. Two sets of armor can be crafted from this hide."
+                    description: "Can be crafted into a set of light armor..."
                 },
                 { 
                     name: "Red Dragon Scales", 
                     dice: "2d8",
-                    description: "If you have 20 scales, you can craft them into scale mail armor (2000 gp, 60 days). While wearing this armor, you have resistance to fire damage."
+                    description: "If you have 20 scales..."
                 },
                 { 
                     name: "Red Dragon Teeth", 
                     dice: "2d8",
-                    description: "One tooth can be used as the tip on an arrow or a crossbow bolt. Ranged attacks that use ammunition made from these teeth deal an additional 1d6 fire damage on a hit. After the ammunition has been fired, it loses this property."
+                    description: "One tooth can be used as the tip on an arrow or a crossbow bolt."
                 },
                 { 
                     name: "Red Dragon Wings", 
                     dice: "1d2",
-                    description: "One wing can be crafted into a resistant cloak (1000 gp, 30 days). Requires attunement. When worn, you have resistance to fire damage."
+                    description: "One wing can be crafted into..."
                 },
                 { 
                     name: "Rations", 
@@ -262,7 +262,8 @@ function generateLoot(characterName, bodies) {
             items = [
                 {
                     name: "Bottles of Alcohol",
-                    dice: "1d2"
+                    dice: "1d2",
+                    description: "There's a scorpion at the bottom."
                 },
                 {
                     name: "Broken Dagger",
@@ -282,17 +283,17 @@ function generateLoot(characterName, bodies) {
                 {
                     name: "Purple Worm Hide",
                     dice: "1",
-                    description: "Hide. Can be crafted into leather armor (10 gp, 2 days) or studded leather armor (45 gp, 3 days). Three sets of armor can be crafted from this hide."
+                    description: "Hide. Can be crafted into ..."
                 },
                 {
                     name: "Purple Worm Protective Plates",
                     dice: "1d6",
-                    description: "Two plates can be crafted into a set of plate armor (1500 gp, 5 days) or into a set of half-plate armor (750 gp, 4 days)."
+                    description: "Two plates can be crafted into ..."
                 },
                 {
                     name: "Purple Worm Tail Stinger",
                     dice: "1",
-                    description: "Can be crafted into a longsword (700 gp, 24 days), a lance (700 gp, 24 days), or a rapier (700 gp, 24 days). On a hit, the weapon deals an additional 7 (2d6) poison damage."
+                    description: "Can be crafted into a longsword ..."
                 },
                 {
                     name: "Rations",
@@ -301,7 +302,7 @@ function generateLoot(characterName, bodies) {
                 {
                     name: "Vials of Purple Worm Poison",
                     dice: "2d6",
-                    description: "As an action, the poison can be used to coat one slashing or piercing weapon, or up to three pieces of ammunition. A creature hit by the poisoned weapon of ammunition must make a DC 16 Constitution saving throw or take 6d6 poison damage on a failed save and half as much damage on a successful one. Once applied, the poison retains its potency for one minute before drying."
+                    description: "As an action, the poison can be used to..."
                 }
             ];
             break;
@@ -315,12 +316,12 @@ function generateLoot(characterName, bodies) {
                 {
                     name: "Troll Claws",
                     dice: "1d4",
-                    description: "Can be crafted into a shortsword (10 gp, 2 days)."
+                    description: "Can be crafted into a shortsword ..."
                 },
                 {
                     name: "Vials of Troll Blood",
                     dice: "2d6",
-                    description: "When consumed, you regain 1d4 hit points at the end of each of your turns for the next minute."
+                    description: "When consumed, you regain ..."
                 }
             ];
             break;
