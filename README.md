@@ -18,7 +18,7 @@ case "Bandit Captain":
     items = [
         {
             name: "Bottles of Alcohol",
-            dice: "1d2"
+            dice: "1d2",
             description: "There's a scorpion at the bottom."
         },
         {
