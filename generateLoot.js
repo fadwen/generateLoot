@@ -278,6 +278,7 @@ function generateLoot(characterName, bodies) {
                     dice: "1"
                 }
             ];
+            break;
         case "Purple Worm":
             items = [
                 {
@@ -421,29 +422,29 @@ function generateCurrency(challenge, bodies) {
     const currencyTiers = [
         // Define tier rules for various challenge ranges, taken from Individual Treasure Tables in DMG pg 133
         { minChallenge: 0, maxChallenge: 4, rules: [
-            { maxRoll: 30, result: `${rollDice("5d6" * bodies)} Copper Pieces.` },
+            { maxRoll: 30, result: `${rollDice("5d6", bodies)} Copper Pieces.` },
             { maxRoll: 60, result: `${rollDice("4d6", bodies)} Silver Pieces.` },
-            { maxRoll: 70, result: `${rollDice("3d6" * bodies)} Electrum Pieces.` },
-            { maxRoll: 95, result: `${rollDice("3d6" * bodies)} Gold Pieces.` },
-            { maxRoll: 100, result: `${rollDice("1d6" * bodies)} Platinum Pieces.` }
+            { maxRoll: 70, result: `${rollDice("3d6", bodies)} Electrum Pieces.` },
+            { maxRoll: 95, result: `${rollDice("3d6", bodies)} Gold Pieces.` },
+            { maxRoll: 100, result: `${rollDice("1d6", bodies)} Platinum Pieces.` }
         ] },
         { minChallenge: 5, maxChallenge: 10, rules: [
-            { maxRoll: 30, result: `${rollDice("4d6", bodies) * 100} Copper Pieces and ${rollDice("1d6" * bodies) * 10} Electrum Pieces.` },
-            { maxRoll: 60, result: `${rollDice("6d6" * bodies) * 10} Silver Pieces and ${rollDice("2d6", bodies) * 10} Gold Pieces.` },
-            { maxRoll: 70, result: `${rollDice("3d6" * bodies) * 10} Electrum Pieces and ${rollDice("2d6", bodies) * 10} Gold Pieces.` },
+            { maxRoll: 30, result: `${rollDice("4d6", bodies) * 100} Copper Pieces and ${rollDice("1d6", bodies) * 10} Electrum Pieces.` },
+            { maxRoll: 60, result: `${rollDice("6d6", bodies) * 10} Silver Pieces and ${rollDice("2d6", bodies) * 10} Gold Pieces.` },
+            { maxRoll: 70, result: `${rollDice("3d6", bodies) * 10} Electrum Pieces and ${rollDice("2d6", bodies) * 10} Gold Pieces.` },
             { maxRoll: 95, result: `${rollDice("4d6", bodies) * 10} Gold Pieces.` },
-            { maxRoll: 100, result: `${rollDice("2d6", bodies) * 10} Gold Pieces and ${rollDice("3d6" * bodies)} Platinum Pieces.` }
+            { maxRoll: 100, result: `${rollDice("2d6", bodies) * 10} Gold Pieces and ${rollDice("3d6", bodies)} Platinum Pieces.` }
         ] },
         { minChallenge: 11, maxChallenge: 16, rules: [
-            { maxRoll: 20, result: `${rollDice("4d6", bodies) * 100} Silver Pieces and ${rollDice("1d6" * bodies) * 100} Gold Pieces.` },
-            { maxRoll: 35, result: `${rollDice("1d6" * bodies) * 100} Electrum Pieces and ${rollDice("1d6" * bodies) * 100} Gold Pieces.` },
-            { maxRoll: 75, result: `${rollDice("2d6", bodies) * 100} Gold Pieces and ${rollDice("1d6" * bodies) * 10} Platinum Pieces.` },
+            { maxRoll: 20, result: `${rollDice("4d6", bodies) * 100} Silver Pieces and ${rollDice("1d6", bodies) * 100} Gold Pieces.` },
+            { maxRoll: 35, result: `${rollDice("1d6", bodies) * 100} Electrum Pieces and ${rollDice("1d6", bodies) * 100} Gold Pieces.` },
+            { maxRoll: 75, result: `${rollDice("2d6", bodies) * 100} Gold Pieces and ${rollDice("1d6", bodies) * 10} Platinum Pieces.` },
             { maxRoll: 100, result: `${rollDice("2d6", bodies) * 100} Gold Pieces and ${rollDice("2d6", bodies) * 10} Platinum Pieces.` }
         ] },
         { minChallenge: 17, maxChallenge: Infinity, rules: [
-            { maxRoll: 15, result: `${rollDice("2d6", bodies) * 1000} Electrum Pieces and ${rollDice("8d6" * bodies) * 100} Gold Pieces.` },
-            { maxRoll: 55, result: `${rollDice("1d6" * bodies) * 1000} Gold Pieces and ${rollDice("1d6" * bodies) * 100} Platinum Pieces.` },
-            { maxRoll: 100, result: `${rollDice("1d6" * bodies) * 1000} Gold Pieces and ${rollDice("2d6", bodies) * 100} Platinum Pieces.` }
+            { maxRoll: 15, result: `${rollDice("2d6", bodies) * 1000} Electrum Pieces and ${rollDice("8d6", bodies) * 100} Gold Pieces.` },
+            { maxRoll: 55, result: `${rollDice("1d6", bodies) * 1000} Gold Pieces and ${rollDice("1d6", bodies) * 100} Platinum Pieces.` },
+            { maxRoll: 100, result: `${rollDice("1d6", bodies) * 1000} Gold Pieces and ${rollDice("2d6", bodies) * 100} Platinum Pieces.` }
         ] }
     ];
     // Find the appropriate currency tier based on the challenge
