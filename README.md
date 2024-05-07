@@ -1,7 +1,7 @@
 # generateLoot
  Roll20 api companion script for DMs to have randomly generated loot from NPCs.  Inspired from purchasing https://www.dmsguild.com/product/309506/Monster-Loot--Out-of-the-Abyss and knew that I was too lazy to look up in the pdf each time a monster died.  This was made for 5e and using pre-made NPCs found in the modules.
 
-![alt text](example.png)
+
 
 Commands:
 
