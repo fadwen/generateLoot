@@ -494,16 +494,3 @@ function rollDice(diceNotation, bodies) {
     }
     return total + modifier;
 }
-
-function parseAndRollDice(diceNotation) {
-    const parts = diceNotation.match(/(\d+)d(\d+)([+-]\d+)?/);
-    const diceCount = parseInt(parts[1], 10);
-    const diceType = parseInt(parts[2], 10);
-    const modifier = parts[3] ? parseInt(parts[3], 10) : 0;
-
-    let subtotal = 0;
-    for (let i = 0; i < diceCount; i++) {
-        subtotal += Math.floor(Math.random() * diceType) + 1;
-    }
-    return subtotal + modifier;
-}
