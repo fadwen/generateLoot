@@ -1,5 +1,5 @@
 on("chat:message", function(msg) {
-    if (msg.type == "api" && msg.content.indexOf("!lootGenerate") === 0) {
+    if (msg.type == "api" && msg.content.indexOf("!generateLoot") === 0) {
         let args = msg.content.split(" ");
         let numberOfBodies = args.length > 1 ? parseInt(args[1], 10) : undefined;
 

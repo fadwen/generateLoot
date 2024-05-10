@@ -36,17 +36,19 @@ case "Bandit Captain":
     ];
 ```
 
-`name` and `dice` are required fields.
+`name` is required. It is the item name you want displayed in the loot roll.
 
-    `name` is for that item.  It supports adding "Broken" to the start of the item, and when loot is output there is a 65% chance for it to be not-broken.
+    It supports adding "Broken" to the start of the item, and when loot is output there is a 65% chance for it to be not-broken.
 
-    `dice` being formatted as either a whole number "1" or dice notation "1d6", "1d10+5"
+`dice` is optional, if missing will act as if set to "1".
 
-`description` is optional and provides further context to the player for that item
+    `dice` being formatted as either a whole number "1", "3", etc or dice notation "1d6", "1d10+5", etc.
 
-Additionally, will format the color of the header of npc based on npc_challenge.
+`description` is optional and provides further context to the player for that item.  Can be used as flavor text or the mechanics of it.
 
-Finally, this commands takes into account the npc_type, defined in `const exclusions` to not drop currency.  If it is not excluded then it will look at the npc_challenge and generate currency for the creature based on the individual loot table in the DMG.
+Additionally, will format the color of the header of npc based on npc_challenge attribute in Roll20.
+
+Finally, this commands takes into account the npc_type attribute in Roll20.  These are defined in `const exclusions` to not drop currency.  If it is not excluded then it will look at the npc_challenge and generate currency for the creature based on the individual loot table in the DMG.
 
 ---
 
