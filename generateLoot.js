@@ -415,63 +415,88 @@ function formatLootTable(characterName, loot, challenge) {
 
 // Function to determine and generate currency based on challenge rating
 function generateCurrency(challenge, bodies) {
-    let currencyRoll = randomInteger(100);
-    let currencyResult = "<div style='margin-left: 10px; border-top: 1px solid black; padding: 5px; background-color: #5d5d5d; color: white;'><strong>Currency:</strong> ";
 
     // Define currency tiers and their rules
     const currencyTiers = [
+        
         // Define tier rules for various challenge ranges, taken from Individual Treasure Tables in DMG pg 133
         { minChallenge: 0, maxChallenge: 4, rules: [
-            { maxRoll: 30, result: `${rollDice("5d6", bodies)} Copper Pieces.` },
-            { maxRoll: 60, result: `${rollDice("4d6", bodies)} Silver Pieces.` },
-            { maxRoll: 70, result: `${rollDice("3d6", bodies)} Electrum Pieces.` },
-            { maxRoll: 95, result: `${rollDice("3d6", bodies)} Gold Pieces.` },
-            { maxRoll: 100, result: `${rollDice("1d6", bodies)} Platinum Pieces.` }
+            { maxRoll: 30, result: `${rollDice("5d6", 1)} Copper Pieces` },
+            { maxRoll: 60, result: `${rollDice("4d6", 1)} Silver Pieces` },
+            { maxRoll: 70, result: `${rollDice("3d6", 1)} Electrum Pieces` },
+            { maxRoll: 95, result: `${rollDice("3d6", 1)} Gold Pieces` },
+            { maxRoll: 100, result: `${rollDice("1d6", 1)} Platinum Pieces` }
         ] },
         { minChallenge: 5, maxChallenge: 10, rules: [
-            { maxRoll: 30, result: `${rollDice("4d6", bodies) * 100} Copper Pieces and ${rollDice("1d6", bodies) * 10} Electrum Pieces.` },
-            { maxRoll: 60, result: `${rollDice("6d6", bodies) * 10} Silver Pieces and ${rollDice("2d6", bodies) * 10} Gold Pieces.` },
-            { maxRoll: 70, result: `${rollDice("3d6", bodies) * 10} Electrum Pieces and ${rollDice("2d6", bodies) * 10} Gold Pieces.` },
-            { maxRoll: 95, result: `${rollDice("4d6", bodies) * 10} Gold Pieces.` },
-            { maxRoll: 100, result: `${rollDice("2d6", bodies) * 10} Gold Pieces and ${rollDice("3d6", bodies)} Platinum Pieces.` }
+            { maxRoll: 30, result: `${rollDice("4d6", 1, 100)} Copper Pieces and ${rollDice("1d6", 1, 10)} Electrum Pieces` },
+            { maxRoll: 60, result: `${rollDice("6d6", 1, 10)} Silver Pieces and ${rollDice("2d6", 1, 10)} Gold Pieces` },
+            { maxRoll: 70, result: `${rollDice("3d6", 1, 10)} Electrum Pieces and ${rollDice("2d6", 1, 10)} Gold Pieces` },
+            { maxRoll: 95, result: `${rollDice("4d6", 1, 10)} Gold Pieces` },
+            { maxRoll: 100, result: `${rollDice("2d6", 1, 10)} Gold Pieces and ${rollDice("3d6", 1)} Platinum Pieces` }
         ] },
         { minChallenge: 11, maxChallenge: 16, rules: [
-            { maxRoll: 20, result: `${rollDice("4d6", bodies) * 100} Silver Pieces and ${rollDice("1d6", bodies) * 100} Gold Pieces.` },
-            { maxRoll: 35, result: `${rollDice("1d6", bodies) * 100} Electrum Pieces and ${rollDice("1d6", bodies) * 100} Gold Pieces.` },
-            { maxRoll: 75, result: `${rollDice("2d6", bodies) * 100} Gold Pieces and ${rollDice("1d6", bodies) * 10} Platinum Pieces.` },
-            { maxRoll: 100, result: `${rollDice("2d6", bodies) * 100} Gold Pieces and ${rollDice("2d6", bodies) * 10} Platinum Pieces.` }
+            { maxRoll: 20, result: `${rollDice("4d6", 1, 100)} Silver Pieces and ${rollDice("1d6", 1, 100)} Gold Pieces` },
+            { maxRoll: 35, result: `${rollDice("1d6", 1, 100)} Electrum Pieces and ${rollDice("1d6", 1, 100)} Gold Pieces` },
+            { maxRoll: 75, result: `${rollDice("2d6", 1, 100)} Gold Pieces and ${rollDice("1d6", 1, 10)} Platinum Pieces` },
+            { maxRoll: 100, result: `${rollDice("2d6", 1, 100)} Gold Pieces and ${rollDice("2d6", 1, 10)} Platinum Pieces` }
         ] },
         { minChallenge: 17, maxChallenge: Infinity, rules: [
-            { maxRoll: 15, result: `${rollDice("2d6", bodies) * 1000} Electrum Pieces and ${rollDice("8d6", bodies) * 100} Gold Pieces.` },
-            { maxRoll: 55, result: `${rollDice("1d6", bodies) * 1000} Gold Pieces and ${rollDice("1d6", bodies) * 100} Platinum Pieces.` },
-            { maxRoll: 100, result: `${rollDice("1d6", bodies) * 1000} Gold Pieces and ${rollDice("2d6", bodies) * 100} Platinum Pieces.` }
+            { maxRoll: 15, result: `${rollDice("2d6", 1, 1000)} Electrum Pieces and ${rollDice("8d6", 1, 100)} Gold Pieces` },
+            { maxRoll: 55, result: `${rollDice("1d6", 1, 1000)} Gold Pieces and ${rollDice("1d6", 1, 100)} Platinum Pieces` },
+            { maxRoll: 100, result: `${rollDice("1d6", 1, 1000)} Gold Pieces and ${rollDice("2d6", 1, 100)} Platinum Pieces` }
         ] }
     ];
-    // Find the appropriate currency tier based on the challenge
-    const tier = currencyTiers.find(tier => challenge >= tier.minChallenge && challenge <= tier.maxChallenge);
-    // Apply currency generation rules based on the tier
-    if (tier) {
-    for (const rule of tier.rules) {
-        if (currencyRoll <= rule.maxRoll) {
-        currencyResult += rule.result;
-          break; // Stop after the first matching rule
+
+    // Initialize results object to store currency amounts
+    const results = {
+        "Copper Pieces": 0,
+        "Silver Pieces": 0,
+        "Electrum Pieces": 0,
+        "Gold Pieces": 0,
+        "Platinum Pieces": 0
+    };
+    //console.log(`Bodies: ${bodies}`); // Log the number of bodies
+
+    // Roll for currency based on the number of bodies
+    for (let i = 0; i < bodies; i++) {
+        let currencyRoll = Math.floor(Math.random() * 100);
+        //console.log(`Currency Roll: ${currencyRoll}`); // Log the currency roll
+        const tier = currencyTiers.find(t => challenge >= t.minChallenge && challenge <= t.maxChallenge);
+        //console.log(`Tier: ${JSON.stringify(tier)}`); // Log the tier
+        if (tier) {
+            for (const rule of tier.rules) {
+                if (currencyRoll <= rule.maxRoll) {
+                    const resultsParts = rule.result.split('and');
+                    for (const resultPart of resultsParts) {
+                        const [amount, ...currencyParts] = resultPart.trim().split(' ');
+                        const currency = currencyParts.join(' ');
+                        const rollResult = rollDice(parseInt(amount));
+                        //console.log(`Roll Result for ${amount} ${currency}: ${rollResult}`); // Log the roll result
+                        //console.log(`Updating ${currency} with ${rollResult}`); // Log the currency and roll result
+                        if (!results[currency]) {
+                            results[currency] = 0; // Initialize if not already present
+                        }
+                        results[currency] += rollResult;
+                    }
+                    break;
+                }
+            }
         }
     }
+
+    let currencyResult = "<div style='margin-left: 10px; border-top: 1px solid black; padding: 5px; background-color: #5d5d5d; color: white;'><strong>Currency:</strong> ";
+    for (const [currency, amount] of Object.entries(results)) {
+        //console.log(`Amount of ${currency}: ${amount}`); // Log the amount of each currency
+        if (amount > 0) {
+            currencyResult += `<div>${amount} ${currency}</div>`;
+        }
     }
     currencyResult += "</div>";
     return currencyResult;
 }
 
-//Introduce some RNG to total amounts
-function adjustGoldAmount(amount, multiplier) {
-    // Determine the random adjustment
-    const adjustment = Math.floor(Math.random() * (multiplier / 10) + 1) * (Math.random() > 0.5 ? 1 : -1);
-    // Apply the adjustment
-    return amount + adjustment;
-}
-
 // Function to simulate dice rolls
-function rollDice(diceNotation, bodies) {
+function rollDice(diceNotation, bodies, multiplier) {
     // Validate and set bodies; default to 1 if not provided or invalid
     bodies = (typeof bodies === 'number' && bodies > 0) ? bodies : 1;
 
@@ -492,5 +517,11 @@ function rollDice(diceNotation, bodies) {
     for (let i = 0; i < diceCount; i++) {
         total += Math.floor(Math.random() * diceType) + 1;
     }
+
+    if (multiplier) {
+        total = total * multiplier;
+        total += Math.floor(Math.random() * (multiplier / 10) + 1) * (Math.random() > 0.5 ? 1 : -1);
+    }
+
     return total + modifier;
 }
