@@ -1,24 +1,37 @@
+// Author: Jeffrey Stuhr
+// Version: 1.0
+// GitHub: https://github.com/fadwen/generateLoot/tree/main
+
+// Description: A script to generate loot for a given number of bodies based on the character's name.
+// Roll20 command: !generateLoot or !generateLoot <number of bodies>
 on("chat:message", function(msg) {
+
+    // Check if the message is an API command
     if (msg.type == "api" && msg.content.indexOf("!generateLoot") === 0) {
         let args = msg.content.split(" ");
         let numberOfBodies = args.length > 1 ? parseInt(args[1], 10) : undefined;
-
+        
+        // Check if the number of bodies is a valid number
         if (!msg.selected || msg.selected.length === 0) {
             sendChat("System", "/w gm Please select at least one token.");
             return;
         }
-
+        // Initialize an object to store character data
         let characterData = {};
 
         // Aggregate character data from selected tokens
         msg.selected.forEach(selection => {
             let token = getObj("graphic", selection._id);
+            // Check if the token represents a character
             if (token) {
                 let characterId = token.get("represents");
+                // Check if the characterId is valid
                 if (characterId) {
                     let character = getObj("character", characterId);
+                    // Check if the character is valid
                     if (character) {
                         let characterName = character.get("name");
+                        // Initialize character data if it doesn't exist
                         if (!characterData[characterName]) {
                             characterData[characterName] = {
                                 count: 0,
@@ -39,10 +52,12 @@ on("chat:message", function(msg) {
             let data = characterData[characterName];
             let results = generateLoot(characterName, numberOfBodies || data.count);
             let lootResults = formatLootTable(characterName, results, data.challengeValue);
-
+            
+            // Check if the NPC type is valid and not excluded
             if (data.npcType) {
                 let npc_type = data.npcType.toLowerCase();
                 const exclusions = ["aberration", "beast", "celestial", "construct", "elemental", "fiend", "plant"];
+                // Check if the NPC type is not excluded and the challenge value is a valid number
                 if (!exclusions.some(type => npc_type.includes(type)) && !isNaN(data.challengeValue)) {
                     lootResults += generateCurrency(data.challengeValue, data.count);
                 }
@@ -56,29 +71,39 @@ on("chat:message", function(msg) {
     }
 });
 
-
-// Find out what the loot table for a creature is via !analyzeLoot
+// Find out what the loot table is populated for a creature based on the character name.
+// Roll20 command: !analyzeLoot
 on("chat:message", function(msg) {
+    // Check if the message is an API command
     if (msg.type === "api" && msg.content.indexOf("!analyzeLoot") === 0) {
         let selected = msg.selected && msg.selected[0];
+
+        // Check if a token is selected
         if (!selected) {
             sendChat("System", "/w gm No token selected.");
             return;
         }
-
+        
+        // Get the token object
         let token = getObj("graphic", selected._id);
+
+        // Check if the selected object is a token
         if (!token) {
             sendChat("System", "/w gm Selected object is not a token.");
             return;
         }
 
+        // Get the character ID from the token
         let characterId = token.get("represents");
+        // Check if the token represents a character
         if (!characterId) {
             sendChat("System", "/w gm This token does not represent a character.");
             return;
         }
 
+        // Get the character object
         let character = getObj("character", characterId);
+        // Check if the character object is valid
         if (!character) {
             sendChat("System", "/w gm No character found for this token.");
             return;
@@ -94,7 +119,8 @@ on("chat:message", function(msg) {
     }
 });
 
-// Determine harvest type, dc, and duration via !harvestCheck
+// Determine harvest type, dc, and duration based on the selected token.
+// Roll20 command: !harvestCheck
 on("chat:message", function(msg) {
     if (msg.type == "api" && msg.content.indexOf("!harvestCheck") === 0) {
         let selected = msg.selected && msg.selected[0];
@@ -125,6 +151,7 @@ on("chat:message", function(msg) {
     }
 });
 
+// Function to determine loot for a given number of bodies
 function analyzeLootDetails(lootResults) {
     // Initialize message with character name or a default message if name is missing
     let message = `<div><strong>${lootResults.characterName || "Unknown Character"}</strong></div>`;
@@ -143,6 +170,7 @@ function analyzeLootDetails(lootResults) {
     return message;
 }
 
+// Function to determine what check is needed for the creature type.
 function determineCheckType(npc_type) {
     // Normalize the string by converting it to lowercase and removing extra spaces
     npc_type = npc_type.toLowerCase().replace(/[\s\(\)]+/g, ' ').trim();
@@ -415,10 +443,8 @@ function formatLootTable(characterName, loot, challenge) {
 
 // Function to determine and generate currency based on challenge rating
 function generateCurrency(challenge, bodies) {
-
     // Define currency tiers and their rules
     const currencyTiers = [
-        
         // Define tier rules for various challenge ranges, taken from Individual Treasure Tables in DMG pg 133
         { minChallenge: 0, maxChallenge: 4, rules: [
             { maxRoll: 30, result: `${rollDice("5d6", 1)} Copper Pieces` },
@@ -496,6 +522,7 @@ function generateCurrency(challenge, bodies) {
 }
 
 // Function to simulate dice rolls
+// Inputs can be a simple number (e.g., "1"), a dice notation (e.g., "2d6"), or a dice notation with a modifier (e.g., "2d6+10")
 function rollDice(diceNotation, bodies, multiplier) {
     // Validate and set bodies; default to 1 if not provided or invalid
     bodies = (typeof bodies === 'number' && bodies > 0) ? bodies : 1;
@@ -518,6 +545,7 @@ function rollDice(diceNotation, bodies, multiplier) {
         total += Math.floor(Math.random() * diceType) + 1;
     }
 
+    // Apply multiplier if provided
     if (multiplier) {
         total = total * multiplier;
         total += Math.floor(Math.random() * (multiplier / 10) + 1) * (Math.random() > 0.5 ? 1 : -1);
